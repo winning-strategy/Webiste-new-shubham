@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-dark-200 text-white antialiased;
+  }
+}
+
+@layer utilities {
+  .glass-morphism {
+    @apply bg-white/5 backdrop-blur-md border border-white/[0.08];
+  }
+  
+  .glass-morphism-hover {
+    @apply hover:bg-white/[0.08] hover:border-primary/30 hover:shadow-[0_16px_48px_rgba(20,184,166,0.2)];
+  }
+}
+

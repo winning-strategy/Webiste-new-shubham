@@ -2,9 +2,11 @@
 
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import ContactModal from '@/components/ContactModal';
 import { motion } from 'framer-motion';
 import { CheckIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
+import { useState } from 'react';
 
 const pricingPlans = [
   {
@@ -22,7 +24,9 @@ const pricingPlans = [
     ],
     cta: 'Start Free Trial',
     highlighted: false,
-    color: 'from-blue-500 to-cyan-500'
+    color: 'from-blue-500 to-cyan-500',
+    priceId: '', // Free trial doesn't need a Stripe price ID
+    isFree: true
   },
   {
     name: 'Plus',
@@ -41,7 +45,9 @@ const pricingPlans = [
     ],
     cta: 'Get Started',
     highlighted: false,
-    color: 'from-emerald-500 to-teal-500'
+    color: 'from-emerald-500 to-teal-500',
+    priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_PLUS || '',
+    isFree: false
   },
   {
     name: 'Pro',
@@ -62,7 +68,9 @@ const pricingPlans = [
     ],
     cta: 'Get Started',
     highlighted: true,
-    color: 'from-primary to-emerald-400'
+    color: 'from-primary to-emerald-400',
+    priceId: process.env.NEXT_PUBLIC_STRIPE_PRICE_PRO || '',
+    isFree: false
   },
   {
     name: 'Enterprise',
@@ -84,11 +92,72 @@ const pricingPlans = [
     ],
     cta: 'Contact Sales',
     highlighted: false,
-    color: 'from-purple-500 to-pink-500'
+    color: 'from-purple-500 to-pink-500',
+    priceId: '',
+    isEnterprise: true
   }
 ];
 
 export default function PricingPage() {
+  const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+
+  const handleCheckout = async (plan: typeof pricingPlans[0]) => {
+    // Handle free trial and enterprise differently
+    if (plan.isFree) {
+      // Redirect to signup for free trial
+      window.location.href = '/signup';
+      return;
+    }
+
+    if (plan.isEnterprise) {
+      // Open contact modal for enterprise
+      setIsContactModalOpen(true);
+      return;
+    }
+
+    if (!plan.priceId) {
+      setError('This plan is not configured yet. Please contact support.');
+      return;
+    }
+
+    setLoadingPlan(plan.name);
+    setError(null);
+
+    try {
+      // Create checkout session
+      const response = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          priceId: plan.priceId,
+          planName: plan.name,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to create checkout session');
+      }
+
+      const { url } = await response.json();
+
+      if (url) {
+        // Redirect to Stripe Checkout
+        window.location.href = url;
+      } else {
+        throw new Error('No checkout URL returned');
+      }
+    } catch (err: any) {
+      console.error('Checkout error:', err);
+      setError(err.message || 'Failed to start checkout. Please try again.');
+      setLoadingPlan(null);
+    }
+  };
+
   return (
     <main className="min-h-screen bg-dark-200">
       <Header />
@@ -108,6 +177,11 @@ export default function PricingPage() {
             <p className="text-xl text-gray-400 max-w-3xl mx-auto">
               Select the perfect plan for your team. All plans include access to our powerful AI agents.
             </p>
+            {error && (
+              <div className="mt-4 bg-red-500/10 border border-red-500/50 rounded-lg p-4 max-w-2xl mx-auto">
+                <p className="text-red-400">{error}</p>
+              </div>
+            )}
           </motion.div>
 
           {/* Pricing Cards */}
@@ -152,16 +226,27 @@ export default function PricingPage() {
                     <p className="text-gray-400 mb-6">{plan.description}</p>
                     
                     {/* CTA Button */}
-                    <Link
-                      href={plan.name === 'Enterprise' ? '/contact' : '/signup'}
-                      className={`block w-full text-center py-3 px-6 rounded-lg font-semibold transition-all duration-300 mb-8 ${
+                    <button
+                      onClick={() => handleCheckout(plan)}
+                      disabled={loadingPlan === plan.name}
+                      className={`block w-full text-center py-3 px-6 rounded-lg font-semibold transition-all duration-300 mb-8 disabled:opacity-50 disabled:cursor-not-allowed ${
                         plan.highlighted
                           ? 'bg-gradient-to-r from-primary to-emerald-400 text-white hover:shadow-lg hover:shadow-primary/50'
                           : 'bg-white/10 text-white hover:bg-white/20 border border-white/20'
                       }`}
                     >
-                      {plan.cta}
-                    </Link>
+                      {loadingPlan === plan.name ? (
+                        <span className="flex items-center justify-center gap-2">
+                          <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                          Processing...
+                        </span>
+                      ) : (
+                        plan.cta
+                      )}
+                    </button>
                     
                     {/* Features */}
                     <div className="space-y-3">
@@ -193,12 +278,12 @@ export default function PricingPage() {
               <p className="text-gray-400 mb-6">
                 Our team is here to help you find the perfect solution for your business needs.
               </p>
-              <Link
-                href="/contact"
+              <button
+                onClick={() => setIsContactModalOpen(true)}
                 className="inline-block bg-gradient-to-r from-primary to-emerald-400 text-white py-3 px-8 rounded-lg font-semibold hover:shadow-lg hover:shadow-primary/50 transition-all duration-300"
               >
                 Contact Sales
-              </Link>
+              </button>
             </div>
           </motion.div>
 
@@ -226,6 +311,12 @@ export default function PricingPage() {
           </motion.div>
         </div>
       </section>
+
+      {/* Contact Modal */}
+      <ContactModal 
+        isOpen={isContactModalOpen} 
+        onClose={() => setIsContactModalOpen(false)} 
+      />
 
       <Footer />
     </main>

@@ -2,163 +2,180 @@
 
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import Hero from '@/components/Hero';
+import OurDifferentiator from '@/components/OurDifferentiator';
+import AgentLink from '@/components/AgentLink';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 
 export default function Home() {
-  const [chartHeights, setChartHeights] = useState([30, 40, 50, 60, 70, 80]);
-  const [checkmarks, setCheckmarks] = useState([false, false, false, false]);
   const [mounted, setMounted] = useState(false);
   
   useEffect(() => {
     setMounted(true);
-    
-    // Simplified animation - just set final values
-    setChartHeights([30, 45, 60, 75, 90, 100]);
-    
-    // Animate checkmarks appearing with reduced frequency
-    const checkmarkTimers = [
-      setTimeout(() => setCheckmarks(prev => [true, prev[1], prev[2], prev[3]]), 500),
-      setTimeout(() => setCheckmarks(prev => [prev[0], true, prev[2], prev[3]]), 1000),
-      setTimeout(() => setCheckmarks(prev => [prev[0], prev[1], true, prev[3]]), 1500),
-      setTimeout(() => setCheckmarks(prev => [prev[0], prev[1], prev[2], true]), 2000),
-    ];
-
-    return () => {
-      checkmarkTimers.forEach(timer => clearTimeout(timer));
-    };
   }, []);
 
   if (!mounted) {
     return (
       <main>
         <Header />
-        <section className="min-h-[calc(100vh-80px)] px-8 py-12 flex items-center bg-gradient-to-br from-dark-200 via-dark-200 to-dark-100">
-          <div className="max-w-7xl mx-auto w-full">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              <div>
-                <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-primary/10 border border-primary/30 rounded-full">
-                  <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
-                  <span className="text-primary font-medium text-sm">AI-Powered Business Analyst</span>
-                </div>
-                <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-                  Accelerate your productivity by 
-                  <span className="text-white"> 10X</span>
-                  <br />
-                  <span className="bg-gradient-to-r from-primary via-emerald-400 to-cyan-400 bg-clip-text text-transparent">
-                    with AI Agents
-                  </span>
-                </h1>
-                <p className="text-xl text-gray-400 mb-10">
-                  Instant insights for Strategy and Finance Teams
-                </p>
-                <div className="flex flex-wrap gap-4">
-                  <Link 
-                    href="/contact" 
-                    className="inline-block bg-primary hover:bg-primary-dark text-white px-8 py-4 rounded-lg font-semibold transition-all shadow-lg shadow-primary/30"
-                  >
-                    Book a demo
-                  </Link>
-                  <Link 
-                    href="/contact" 
-                    className="inline-block bg-white hover:bg-gray-100 text-dark-200 px-8 py-4 rounded-lg font-semibold transition-all"
-                  >
-                    Contact Us
-                  </Link>
-                </div>
-              </div>
-              <div className="relative">
-                <div className="glass-morphism rounded-3xl p-8 relative overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-emerald-500/5"></div>
-                  <div className="relative z-10">
-                    <div className="flex items-center justify-between mb-6">
-                      <h3 className="text-white font-semibold text-lg">Market Research</h3>
-                      <div className="w-6 h-6 bg-emerald-500 rounded-full flex items-center justify-center">
-                        <span className="text-white text-sm">✓</span>
-                      </div>
-                    </div>
-                    <div className="mb-8">
-                      <div className="flex items-end justify-between h-48 gap-3">
-                        {[30, 45, 60, 75, 90, 100].map((height, index) => (
-                          <div key={index} className="flex-1 flex flex-col items-center gap-2">
-                            <div 
-                              className="w-full bg-gradient-to-t from-primary to-emerald-400 rounded-t-lg relative"
-                              style={{ height: `${height}%` }}
-                            >
-                              <div className="absolute -top-8 left-1/2 -translate-x-1/2 text-sm font-semibold text-white whitespace-nowrap">
-                                ${[15, 22, 33, 50, 68, 91][index]}B
-                              </div>
-                            </div>
-                            <span className="text-xs text-gray-400">
-                              {2025 + index}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-2 gap-3 mb-6">
-                      {['Market Size Calculations', 'Growth Trends', 'Excel Model Generated', 'Report Citations'].map((feature, index) => (
-                        <div key={index} className="flex items-center gap-2">
-                          <div className="w-5 h-5 rounded-full flex items-center justify-center bg-emerald-500">
-                            <span className="text-white text-xs">✓</span>
-                          </div>
-                          <span className="text-sm text-white/80">{feature}</span>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="flex items-center justify-between p-4 bg-dark-100/50 rounded-lg border border-white/5">
-                      <span className="text-white/70 text-sm">Market Research Report Generated</span>
-                      <div className="w-6 h-6 bg-emerald-500 rounded-full flex items-center justify-center">
-                        <span className="text-white text-sm">✓</span>
-                      </div>
-                    </div>
+        <Hero />
+        <section className="py-20 px-8 bg-dark-200">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl md:text-5xl font-bold mb-6">
+                Your AI-Powered 
+                <span className="text-primary"> Agent Team</span>
+              </h2>
+              <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+                Four specialized agents working together to accelerate your business workflows
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+              <Link href="/products/spreadsheet-agent" className="block h-full">
+                <div className="h-full glass-morphism rounded-2xl p-8 hover:border-blue-500/50 transition-all duration-300 cursor-pointer">
+                  <div className="w-16 h-16 bg-blue-500/10 rounded-xl flex items-center justify-center mb-6">
+                    <svg className="w-9 h-9 text-blue-400" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 01-1.125-1.125M3.375 19.5h7.5c.621 0 1.125-.504 1.125-1.125m-9.75 0V5.625m0 12.75v-1.5c0-.621.504-1.125 1.125-1.125m18.375 2.625V5.625m0 12.75c0 .621-.504 1.125-1.125 1.125m1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125m0 3.75h-7.5A1.125 1.125 0 0112 18.375m9.75-12.75c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125m19.5 0v1.5c0 .621-.504 1.125-1.125 1.125M2.25 5.625v1.5c0 .621.504 1.125 1.125 1.125m0 0h17.25m-17.25 0h7.5c.621 0 1.125.504 1.125 1.125M3.375 8.25c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125m17.25-3.75h-7.5c-.621 0-1.125.504-1.125 1.125m8.625-1.125c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125M12 10.875v-1.5m0 1.5c0 .621-.504 1.125-1.125 1.125M12 10.875c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125M13.125 12h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125M20.625 12c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h7.5M12 14.625v-1.5m0 1.5c0 .621-.504 1.125-1.125 1.125M12 14.625c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125m0 1.5v-1.5m0 0c0-.621.504-1.125 1.125-1.125m0 0h7.5" />
+                    </svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-white mb-4">Spreadsheet Agent</h3>
+                  <p className="text-gray-400 text-base mb-6 leading-relaxed">
+                    Build complex Excel models, automate data analysis, and generate financial projections in seconds.
+                  </p>
+                  <ul className="space-y-3 mb-6">
+                    <li className="flex items-center gap-3 text-sm text-gray-300">
+                      <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
+                      Financial Modeling & Projections
+                    </li>
+                    <li className="flex items-center gap-3 text-sm text-gray-300">
+                      <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
+                      Data Automation & Analysis
+                    </li>
+                    <li className="flex items-center gap-3 text-sm text-gray-300">
+                      <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
+                      Formula Generation & Optimization
+                    </li>
+                  </ul>
+                  <div className="flex items-center gap-2 text-blue-400 text-sm font-semibold">
+                    Learn More
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
                   </div>
                 </div>
-                <div className="mt-6 glass-morphism rounded-2xl p-4">
-                  <div className="flex items-center gap-3 mb-3">
-                    <span className="px-3 py-1 bg-primary/20 text-primary text-sm rounded-full border border-primary/30">
-                      Identify Top Growth Opportunities
-                    </span>
-                    <span className="px-3 py-1 bg-primary/20 text-primary text-sm rounded-full border border-primary/30">
-                      Design GTM Strategy
-                    </span>
+              </Link>
+
+              <Link href="/products/slide-generation-agent" className="block h-full">
+                <div className="h-full glass-morphism rounded-2xl p-8 hover:border-purple-500/50 transition-all duration-300 cursor-pointer">
+                  <div className="w-16 h-16 bg-purple-500/10 rounded-xl flex items-center justify-center mb-6">
+                    <svg className="w-9 h-9 text-purple-400" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5m.75-9l3-3 2.148 2.148A12.061 12.061 0 0116.5 7.605" />
+                    </svg>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <span className="text-primary text-xl">/</span>
-                    <input
-                      type="text"
-                      placeholder="Analyze EV charging infrastructure Market Size in USA"
-                      className="flex-1 bg-transparent text-white/50 outline-none text-sm"
-                      disabled
-                    />
-                    <button className="bg-primary hover:bg-primary-dark text-white px-6 py-2 rounded-lg font-medium transition-colors">
-                      Search
-                    </button>
+                  <h3 className="text-2xl font-bold text-white mb-4">Slide Generation Agent</h3>
+                  <p className="text-gray-400 text-base mb-6 leading-relaxed">
+                    Create professional presentations in minutes with AI-generated slides and smart design.
+                  </p>
+                  <ul className="space-y-3 mb-6">
+                    <li className="flex items-center gap-3 text-sm text-gray-300">
+                      <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
+                      Auto-Design & Smart Templates
+                    </li>
+                    <li className="flex items-center gap-3 text-sm text-gray-300">
+                      <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
+                      Research Integration & Content
+                    </li>
+                    <li className="flex items-center gap-3 text-sm text-gray-300">
+                      <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
+                      Visual Design & Formatting
+                    </li>
+                  </ul>
+                  <div className="flex items-center gap-2 text-purple-400 text-sm font-semibold">
+                    Learn More
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
                   </div>
                 </div>
-              </div>
+              </Link>
+
+              <Link href="/products/data-analysis-agent" className="block h-full">
+                <div className="h-full glass-morphism rounded-2xl p-8 hover:border-emerald-500/50 transition-all duration-300 cursor-pointer">
+                  <div className="w-16 h-16 bg-emerald-500/10 rounded-xl flex items-center justify-center mb-6">
+                    <svg className="w-9 h-9 text-emerald-400" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-white mb-4">Data Analysis Agent</h3>
+                  <p className="text-gray-400 text-base mb-6 leading-relaxed">
+                    Transform raw data into actionable insights with advanced analytics and visualizations.
+                  </p>
+                  <ul className="space-y-3 mb-6">
+                    <li className="flex items-center gap-3 text-sm text-gray-300">
+                      <div className="w-2 h-2 bg-emerald-400 rounded-full"></div>
+                      Trend Analysis & Pattern Detection
+                    </li>
+                    <li className="flex items-center gap-3 text-sm text-gray-300">
+                      <div className="w-2 h-2 bg-emerald-400 rounded-full"></div>
+                      Smart Visualizations & Charts
+                    </li>
+                    <li className="flex items-center gap-3 text-sm text-gray-300">
+                      <div className="w-2 h-2 bg-emerald-400 rounded-full"></div>
+                      Predictive Insights & Forecasting
+                    </li>
+                  </ul>
+                  <div className="flex items-center gap-2 text-emerald-400 text-sm font-semibold">
+                    Learn More
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
+                  </div>
+                </div>
+              </Link>
+
+              <Link href="/products/report-generation-agent" className="block h-full">
+                <div className="h-full glass-morphism rounded-2xl p-8 hover:border-orange-500/50 transition-all duration-300 cursor-pointer">
+                  <div className="w-16 h-16 bg-orange-500/10 rounded-xl flex items-center justify-center mb-6">
+                    <svg className="w-9 h-9 text-orange-400" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-white mb-4">Report Generation Agent</h3>
+                  <p className="text-gray-400 text-base mb-6 leading-relaxed">
+                    Generate comprehensive business reports with automated research and citations.
+                  </p>
+                  <ul className="space-y-3 mb-6">
+                    <li className="flex items-center gap-3 text-sm text-gray-300">
+                      <div className="w-2 h-2 bg-orange-400 rounded-full"></div>
+                      Automated Research & Data Collection
+                    </li>
+                    <li className="flex items-center gap-3 text-sm text-gray-300">
+                      <div className="w-2 h-2 bg-orange-400 rounded-full"></div>
+                      Citations & Source Verification
+                    </li>
+                    <li className="flex items-center gap-3 text-sm text-gray-300">
+                      <div className="w-2 h-2 bg-orange-400 rounded-full"></div>
+                      Professional Formatting & Export
+                    </li>
+                  </ul>
+                  <div className="flex items-center gap-2 text-orange-400 text-sm font-semibold">
+                    Learn More
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                    </svg>
+                  </div>
+                </div>
+              </Link>
             </div>
           </div>
         </section>
-        <section className="py-20 px-8 bg-dark-200">
-          <div className="max-w-7xl mx-auto text-center">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Cut Weeks of Work into 
-              <span className="text-primary"> Minutes</span>
-            </h2>
-            <p className="text-xl text-gray-400 max-w-4xl mx-auto mb-12">
-              Plug-and-Play AI-Agent Teams for Accelerating Market Research, Data Analysis, 
-              Data Modelling, and Report Generation Workflows.
-            </p>
-            <Link 
-              href="/products/spreadsheet-agent" 
-              className="inline-block bg-primary hover:bg-primary-dark text-white px-8 py-4 rounded-lg font-semibold transition-all shadow-lg shadow-primary/30"
-            >
-              Explore Our Products
-            </Link>
-          </div>
-        </section>
+        
+        {/* Our Differentiators Section */}
+        <OurDifferentiator />
+        
         <Footer />
       </main>
     );
@@ -168,216 +185,207 @@ export default function Home() {
     <main>
       <Header />
       
-      {/* Hero Section - Split Layout */}
-      <section className="min-h-[calc(100vh-80px)] px-8 py-12 flex items-center bg-gradient-to-br from-dark-200 via-dark-200 to-dark-100">
-        <div className="max-w-7xl mx-auto w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      {/* Hero Section with Background Animations */}
+      <Hero />
+
+      {/* AI Agents Showcase Section */}
+      <section className="py-20 px-8 bg-dark-200">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              Your AI-Powered 
+              <span className="text-primary"> Agent Team</span>
+            </h2>
+            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
+              Four specialized agents working together to accelerate your business workflows
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
             
-            {/* Left Side - Content */}
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              <motion.div
-                initial={{ scale: 0.9, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-primary/10 border border-primary/30 rounded-full"
-              >
-                <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
-                <span className="text-primary font-medium text-sm">AI-Powered Business Analyst</span>
-              </motion.div>
-              
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-                Accelerate your productivity by 
-                <span className="text-white"> 10X</span>
-                <br />
-                <span className="bg-gradient-to-r from-primary via-emerald-400 to-cyan-400 bg-clip-text text-transparent">
-                  with AI Agents
-                </span>
-              </h1>
-              
-              <p className="text-xl text-gray-400 mb-10">
-                Instant insights for Strategy and Finance Teams
+            {/* Spreadsheet Agent Card */}
+            <div className="h-full glass-morphism rounded-2xl p-8 hover:border-primary/50 transition-all duration-300">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <svg className="w-9 h-9 text-primary" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 01-1.125-1.125M3.375 19.5h7.5c.621 0 1.125-.504 1.125-1.125m-9.75 0V5.625m0 12.75v-1.5c0-.621.504-1.125 1.125-1.125m18.375 2.625V5.625m0 12.75c0 .621-.504 1.125-1.125 1.125m1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125m0 3.75h-7.5A1.125 1.125 0 0112 18.375m9.75-12.75c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125m19.5 0v1.5c0 .621-.504 1.125-1.125 1.125M2.25 5.625v1.5c0 .621.504 1.125 1.125 1.125m0 0h17.25m-17.25 0h7.5c.621 0 1.125.504 1.125 1.125M3.375 8.25c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125m17.25-3.75h-7.5c-.621 0-1.125.504-1.125 1.125m8.625-1.125c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125M12 10.875v-1.5m0 1.5c0 .621-.504 1.125-1.125 1.125M12 10.875c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125M13.125 12h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125M20.625 12c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h7.5M12 14.625v-1.5m0 1.5c0 .621-.504 1.125-1.125 1.125M12 14.625c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125m0 1.5v-1.5m0 0c0-.621.504-1.125 1.125-1.125m0 0h7.5" />
+                  </svg>
+                </div>
+                <h3 className="text-2xl font-bold text-white">Spreadsheet Agent</h3>
+              </div>
+              <p className="text-gray-400 text-base mb-6 leading-relaxed">
+                Build complex Excel models, automate data analysis, and generate financial projections in seconds.
               </p>
+              <ul className="space-y-3 mb-6">
+                <li className="flex items-center gap-3 text-sm text-gray-300">
+                  <div className="w-2 h-2 bg-primary rounded-full"></div>
+                  Financial Modeling & Projections
+                </li>
+                <li className="flex items-center gap-3 text-sm text-gray-300">
+                  <div className="w-2 h-2 bg-primary rounded-full"></div>
+                  Data Automation & Analysis
+                </li>
+                <li className="flex items-center gap-3 text-sm text-gray-300">
+                  <div className="w-2 h-2 bg-primary rounded-full"></div>
+                  Formula Generation & Optimization
+                </li>
+              </ul>
+              <div className="flex gap-3">
+                <AgentLink 
+                  agentUrl="https://spreadsheet-agent.winningstrategy.ai/"
+                  className="flex-1 bg-primary hover:bg-primary-dark text-white px-4 py-3 rounded-lg font-semibold text-sm text-center transition-all"
+                >
+                  Try Agent →
+                </AgentLink>
+                <Link 
+                  href="/products/spreadsheet-agent"
+                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-lg font-semibold text-sm text-center transition-all"
+                >
+                  Learn More
+                </Link>
+              </div>
+            </div>
+
+            {/* Presentation Agent Card */}
+            <div className="h-full glass-morphism rounded-2xl p-8 hover:border-primary/50 transition-all duration-300">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <svg className="w-9 h-9 text-primary" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5m.75-9l3-3 2.148 2.148A12.061 12.061 0 0116.5 7.605" />
+                  </svg>
+                </div>
+                <h3 className="text-2xl font-bold text-white">Presentation Agent</h3>
+              </div>
+              <p className="text-gray-400 text-base mb-6 leading-relaxed">
+                Create professional presentations in minutes with AI-generated slides and smart design.
+              </p>
+              <ul className="space-y-3 mb-6">
+                <li className="flex items-center gap-3 text-sm text-gray-300">
+                  <div className="w-2 h-2 bg-primary rounded-full"></div>
+                  Auto-Design & Smart Templates
+                </li>
+                <li className="flex items-center gap-3 text-sm text-gray-300">
+                  <div className="w-2 h-2 bg-primary rounded-full"></div>
+                  Research Integration & Content
+                </li>
+                <li className="flex items-center gap-3 text-sm text-gray-300">
+                  <div className="w-2 h-2 bg-primary rounded-full"></div>
+                  Visual Design & Formatting
+                </li>
+              </ul>
+              <div className="flex gap-3">
+                <AgentLink 
+                  agentUrl="https://presentation-agent.winningstrategy.ai/"
+                  className="flex-1 bg-primary hover:bg-primary-dark text-white px-4 py-3 rounded-lg font-semibold text-sm text-center transition-all"
+                >
+                  Try Agent →
+                </AgentLink>
+                <Link 
+                  href="/products/slide-generation-agent"
+                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-lg font-semibold text-sm text-center transition-all"
+                >
+                  Learn More
+                </Link>
+              </div>
+            </div>
+
+            {/* Data Analysis Agent Card */}
+            <div className="h-full glass-morphism rounded-2xl p-8 hover:border-primary/50 transition-all duration-300">
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <svg className="w-9 h-9 text-primary" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+                  </svg>
+                </div>
+                <h3 className="text-2xl font-bold text-white">Data Analysis Agent</h3>
+              </div>
+              <p className="text-gray-400 text-base mb-6 leading-relaxed">
+                Transform raw data into actionable insights with advanced analytics and intelligent visualizations.
+              </p>
+              <ul className="space-y-3 mb-6">
+                <li className="flex items-center gap-3 text-sm text-gray-300">
+                  <div className="w-2 h-2 bg-primary rounded-full"></div>
+                  Trend Analysis & Pattern Detection
+                </li>
+                <li className="flex items-center gap-3 text-sm text-gray-300">
+                  <div className="w-2 h-2 bg-primary rounded-full"></div>
+                  Smart Visualizations & Charts
+                </li>
+                <li className="flex items-center gap-3 text-sm text-gray-300">
+                  <div className="w-2 h-2 bg-primary rounded-full"></div>
+                  Predictive Insights & Forecasting
+                </li>
+              </ul>
+              <div className="flex gap-3">
+                <AgentLink 
+                  agentUrl="https://data-analysis-agent.winningstrategy.ai/"
+                  className="flex-1 bg-primary hover:bg-primary-dark text-white px-4 py-3 rounded-lg font-semibold text-sm text-center transition-all"
+                >
+                  Try Agent →
+                </AgentLink>
+                <Link 
+                  href="/products/data-analysis-agent"
+                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-lg font-semibold text-sm text-center transition-all"
+                >
+                  Learn More
+                </Link>
+              </div>
+            </div>
+
+            {/* Report Generation Agent Card */}
+            <div className="h-full glass-morphism rounded-2xl p-8 hover:border-primary/50 transition-all duration-300 relative">
+              {/* Coming Soon Badge */}
+              <div className="absolute top-6 right-6 px-3 py-1 bg-primary/20 border border-primary/40 rounded-full">
+                <span className="text-xs text-primary font-semibold">Coming Soon</span>
+              </div>
               
-              <div className="flex flex-wrap gap-4">
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <Link 
-                    href="/contact" 
-                    className="inline-block bg-primary hover:bg-primary-dark text-white px-8 py-4 rounded-lg font-semibold transition-all shadow-lg shadow-primary/30"
-                  >
-                    Book a demo
-                  </Link>
-                </motion.div>
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <Link 
-                    href="/contact" 
-                    className="inline-block bg-white hover:bg-gray-100 text-dark-200 px-8 py-4 rounded-lg font-semibold transition-all"
-                  >
-                    Contact Us
-                  </Link>
-                </motion.div>
+              <div className="flex items-center gap-4 mb-6">
+                <div className="w-16 h-16 bg-primary/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                  <svg className="w-9 h-9 text-primary" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                  </svg>
+                </div>
+                <h3 className="text-2xl font-bold text-white">Report Generation Agent</h3>
               </div>
-            </motion.div>
-
-            {/* Right Side - Animated Chart Mockup */}
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="relative"
-            >
-              {/* Main Card */}
-              <div className="glass-morphism rounded-3xl p-8 relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-emerald-500/5"></div>
-                
-                <div className="relative z-10">
-                  {/* Header with checkmark */}
-                  <div className="flex items-center justify-between mb-6">
-                    <h3 className="text-white font-semibold text-lg">Market Research</h3>
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{ duration: 0.3, delay: 0.8 }}
-                      className="w-6 h-6 bg-emerald-500 rounded-full flex items-center justify-center"
-                    >
-                      <span className="text-white text-sm">✓</span>
-                    </motion.div>
-                  </div>
-
-                  {/* Animated Bar Chart */}
-                  <div className="mb-8">
-                    <div className="flex items-end justify-between h-48 gap-3">
-                      {chartHeights.map((height, index) => (
-                        <div key={index} className="flex-1 flex flex-col items-center gap-2">
-                          <motion.div
-                            initial={{ height: 0 }}
-                            animate={{ height: `${height}%` }}
-                            transition={{ duration: 0.8, delay: 0.2 + index * 0.05 }}
-                            className="w-full bg-gradient-to-t from-primary to-emerald-400 rounded-t-lg relative"
-                          >
-                            <motion.div
-                              initial={{ opacity: 0 }}
-                              animate={{ opacity: 1 }}
-                              transition={{ delay: 0.8 + index * 0.05 }}
-                              className="absolute -top-8 left-1/2 -translate-x-1/2 text-sm font-semibold text-white whitespace-nowrap"
-                            >
-                              ${[15, 22, 33, 50, 68, 91][index]}B
-                            </motion.div>
-                          </motion.div>
-                          <motion.span
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 0.6 + index * 0.05 }}
-                            className="text-xs text-gray-400"
-                          >
-                            {2025 + index}
-                          </motion.span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Feature Checkmarks */}
-                  <div className="grid grid-cols-2 gap-3 mb-6">
-                    {['Market Size Calculations', 'Growth Trends', 'Excel Model Generated', 'Report Citations'].map((feature, index) => (
-                      <motion.div
-                        key={index}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: checkmarks[index] ? 1 : 0.3, x: 0 }}
-                        transition={{ duration: 0.3, delay: 1 + index * 0.5 }}
-                        className="flex items-center gap-2"
-                      >
-                        <div className={`w-5 h-5 rounded-full flex items-center justify-center transition-colors ${checkmarks[index] ? 'bg-emerald-500' : 'bg-gray-600'}`}>
-                          <span className="text-white text-xs">✓</span>
-                        </div>
-                        <span className="text-sm text-white/80">{feature}</span>
-                      </motion.div>
-                    ))}
-                  </div>
-
-                  {/* Status Bar */}
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 2.5 }}
-                    className="flex items-center justify-between p-4 bg-dark-100/50 rounded-lg border border-white/5"
-                  >
-                    <span className="text-white/70 text-sm">Market Research Report Generated</span>
-                    <div className="w-6 h-6 bg-emerald-500 rounded-full flex items-center justify-center">
-                      <span className="text-white text-sm">✓</span>
-                    </div>
-                  </motion.div>
-                </div>
+              <p className="text-gray-400 text-base mb-6 leading-relaxed">
+                Generate comprehensive business reports with automated research, proper citations, and professional formatting.
+              </p>
+              <ul className="space-y-3 mb-6">
+                <li className="flex items-center gap-3 text-sm text-gray-300">
+                  <div className="w-2 h-2 bg-primary rounded-full"></div>
+                  Automated Research & Data Collection
+                </li>
+                <li className="flex items-center gap-3 text-sm text-gray-300">
+                  <div className="w-2 h-2 bg-primary rounded-full"></div>
+                  Citations & Source Verification
+                </li>
+                <li className="flex items-center gap-3 text-sm text-gray-300">
+                  <div className="w-2 h-2 bg-primary rounded-full"></div>
+                  Professional Formatting & Export
+                </li>
+              </ul>
+              <div className="flex gap-3">
+                <button 
+                  disabled
+                  className="flex-1 bg-gray-600 text-gray-400 px-4 py-3 rounded-lg font-semibold text-sm text-center cursor-not-allowed opacity-60"
+                >
+                  Coming Soon
+                </button>
+                <Link 
+                  href="/products/report-generation-agent"
+                  className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-lg font-semibold text-sm text-center transition-all"
+                >
+                  Learn More
+                </Link>
               </div>
+            </div>
 
-              {/* Bottom Search Bar */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 1.5 }}
-                className="mt-6 glass-morphism rounded-2xl p-4"
-              >
-                <div className="flex items-center gap-3 mb-3">
-                  <span className="px-3 py-1 bg-primary/20 text-primary text-sm rounded-full border border-primary/30">
-                    Identify Top Growth Opportunities
-                  </span>
-                  <span className="px-3 py-1 bg-primary/20 text-primary text-sm rounded-full border border-primary/30">
-                    Design GTM Strategy
-                  </span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <span className="text-primary text-xl">/</span>
-                  <input
-                    type="text"
-                    placeholder="Analyze EV charging infrastructure Market Size in USA"
-                    className="flex-1 bg-transparent text-white/50 outline-none text-sm"
-                    disabled
-                  />
-                  <button className="bg-primary hover:bg-primary-dark text-white px-6 py-2 rounded-lg font-medium transition-colors">
-                    Search
-                  </button>
-                </div>
-              </motion.div>
-            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Rest of the page content can go here */}
-      <section className="py-20 px-8 bg-dark-200">
-        <div className="max-w-7xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Cut Weeks of Work into 
-              <span className="text-primary"> Minutes</span>
-            </h2>
-            <p className="text-xl text-gray-400 max-w-4xl mx-auto mb-12">
-              Plug-and-Play AI-Agent Teams for Accelerating Market Research, Data Analysis, 
-              Data Modelling, and Report Generation Workflows.
-            </p>
-            <Link 
-              href="/products/spreadsheet-agent" 
-              className="inline-block bg-primary hover:bg-primary-dark text-white px-8 py-4 rounded-lg font-semibold transition-all shadow-lg shadow-primary/30"
-            >
-              Explore Our Products
-            </Link>
-          </motion.div>
-        </div>
-      </section>
+      {/* Our Differentiators Section */}
+      <OurDifferentiator />
 
       <Footer />
     </main>

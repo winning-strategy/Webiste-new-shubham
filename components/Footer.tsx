@@ -1,6 +1,12 @@
+'use client';
+
 import Link from 'next/link';
+import { useState } from 'react';
+import ContactModal from './ContactModal';
 
 export default function Footer() {
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+
   return (
     <footer className="bg-dark-100 border-t border-gray-700">
       <div className="max-w-7xl mx-auto px-8 py-12">
@@ -42,9 +48,12 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="text-gray-400 hover:text-white transition-colors">
+                <button 
+                  onClick={() => setIsContactModalOpen(true)}
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
                   Contact
-                </Link>
+                </button>
               </li>
               <li>
                 <Link href="/schedule" className="text-gray-400 hover:text-white transition-colors">
@@ -71,6 +80,12 @@ export default function Footer() {
           © 2025 WinningStrategy.ai. All rights reserved.
         </div>
       </div>
+
+      {/* Contact Modal */}
+      <ContactModal 
+        isOpen={isContactModalOpen} 
+        onClose={() => setIsContactModalOpen(false)} 
+      />
     </footer>
   );
 }
